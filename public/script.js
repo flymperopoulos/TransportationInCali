@@ -216,18 +216,16 @@ function updateGraphView(nameOfCounty){
 			// console.log(d.cumulative + Number(d[METHOD[i%METHOD.length]]/d.pop_total));
 			return yPos(d.cumulative + Number(d[METHOD[i]]/d.pop_total)/2); })
 		.text(function(d,i) { return Math.round(100*d[METHOD[i]]/d.pop_total)+"%"; });
-    	}
-    })
-	
+    	
 	var legend = graphSvg.selectAll(".legend")
-	     .data(data)
+	     .data(data[0])
 	     .enter()
 	     .append("g")
 	     .attr("class", "legend");
 
     legend.append("rect")
-       .attr("x", width - 110)
-       .attr("y", function(d, i){ return i * 25 + 30;})
+       .attr("x", s.width-80)
+       .attr("y", function(d, i){return i * 25 + 30;})
        .attr("width", 20)
        .attr("height", 20)
        .style("fill", function(d,i) { 
@@ -235,11 +233,18 @@ function updateGraphView(nameOfCounty){
        });
 
 	legend.append("text")
-	   .attr("x", width-80 )
+	   .attr("x", s.width-100)
 	   .attr("y", function(d, i){ return i * 25 + 30*1.3;})
 	   .attr("dy", ".35em")
 	   .style("text-anchor", "start")
-	   .text(function(d) { return d; });
+	   .text(function(d,i) { return METHOD[i]; });
+
+    	}
+
+
+    })
+	
+	
 }
 
 function getData(name, callback) {
