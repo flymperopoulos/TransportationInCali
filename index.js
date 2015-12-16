@@ -22,6 +22,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.get("/data/:county", function(req, res) {
 	// var fields = req.params.county;
 	db.serialize(function() {
+		console.log(req.params);
 		var out = [];
 		var index = [];
 		db.all("SELECT * FROM counties WHERE county_name=(?)",[req.params.county], function(err, rows){
@@ -43,8 +44,10 @@ app.get("/data/:county", function(req, res) {
 					}
 				}
 			}
-			// console.log(out);
-			res.send(out);	
+			console.log(out);
+			var str = JSON.stringify(out);
+			// console.log(str);
+			res.send(str);	
 		})
 	})
 
@@ -62,7 +65,7 @@ function createCounty(name, year, mode, val, pop_total) {
 	obj.year = year;
 	obj[mode] = val;
 	obj.pop_total = pop_total;
-	console.log(pop_total);
+	// console.log(pop_total);
 	return obj;
 }
 
